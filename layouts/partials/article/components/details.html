@@ -40,8 +40,8 @@
         {{ if $showReadingTime }}
             <div>
                 {{ partial "helper/icon" "clock" }}
-                <time class="article-time--reading">
-                    {{ T "article.readingTime" .ReadingTime }}
+                <time class="article-words"> <!-- <time class="article-time--reading"> -->
+                    {{.WordCount}} 字 <!--{{ T "article.readingTime" .ReadingTime }} -->
                 </time>
             </div>
         {{ end }}
@@ -58,4 +58,6 @@
             </div>
         </footer>
     {{ end }}
+	
+
 </div>
