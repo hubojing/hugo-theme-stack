@@ -1,5 +1,3 @@
-<script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
-<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
 <div id="waline" class="waline-container"></div>
 <style>
     .waline-container {
@@ -29,6 +27,34 @@
 
 <script>
     /// Waline client configuration see: https://waline.js.org/en/reference/client.html
-    Waline.init({{ $config | jsonify | safeJS }});
+    function loadWaline() {
+        const script = document.createElement('script');
+        script.src = '//unpkg.com/@waline/client@v2/dist/waline.js';
+        script.async = true;
+        script.onload = function() {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = '//unpkg.com/@waline/client@v2/dist/waline.css';
+            document.head.appendChild(link);
+            Waline.init({{ $config | jsonify | safeJS }});
+        };
+        document.head.appendChild(script);
+    }
+
+    /// 延迟加载 Waline 评论系统
+    const walineContainer = document.getElementById('waline');
+    if (walineContainer) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    loadWaline();
+                    observer.disconnect();
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        observer.observe(walineContainer);
+    }
 </script>
 {{- end -}}

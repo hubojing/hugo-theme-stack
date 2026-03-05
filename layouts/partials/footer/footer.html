@@ -9,6 +9,15 @@
     </section>
     
     <section class="powerby">
+        <div class="site-stats">
+            <span id="busuanzi_container_site_pv">
+                总访问量：<span id="busuanzi_value_site_pv"></span> 次
+            </span>
+            <span id="busuanzi_container_site_uv" style="margin-left: 15px;">
+                总访客数：<span id="busuanzi_value_site_uv"></span> 人
+            </span>
+            <br/>
+        </div>
         {{ with .Site.Params.footer.customText }}
             {{ . | safeHTML }} <br/>
         {{ end }}
@@ -21,3 +30,5 @@
         {{ T "footer.designedBy" (dict "Theme" $Theme "DesignedBy" $DesignedBy) | safeHTML }}
     </section>
 </footer>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
